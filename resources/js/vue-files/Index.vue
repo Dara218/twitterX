@@ -1,8 +1,8 @@
 <template>
     <div class="flex justify-center items-center min-h-screen bg-black">
-        <div v-if="requestRegistration">
+        <div v-if="openRegistrationModal">
             <div class="bg-slate-500 bg-opacity-50 w-full h-full top-0 absolute"></div>
-            <RegisterModal/>
+            <RegisterModal @closeRegister="closeRegistrationModal" :openRegistrationModal="openRegistrationModal"/>
         </div>
         <div class="flex flex-col items-center md:grid grid-cols-2">
             <div class="col-span-1 md:flex justify-center items-center w-8/12 md:w-full mb-8">
@@ -38,7 +38,8 @@
 <script setup>
     import { ref } from "vue";
     import RegisterModal from '../vue-files/login-register/Register.vue'
-    let requestRegistration = ref(false)
+    let openRegistrationModal = ref(false)
 
-    const createAccount = () => requestRegistration.value = true
+    const createAccount = () => openRegistrationModal.value = true
+    const closeRegistrationModal = () => openRegistrationModal.value = false
 </script>
