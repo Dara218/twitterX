@@ -26,7 +26,7 @@
                     <small>By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.</small>
                 </div>
 
-                <div class="w-8/12 w-full">
+                <div class="md:w-8/12 w-full">
                     <p class="text-xl font-bold mb-4">Already have an account?</p>
                     <button class="cursor-pointer text-blue-500 border border-white rounded-full w-full font-bold py-2 hover:bg-slate-600 hover:bg-opacity-30">Sign in</button>
                 </div>
