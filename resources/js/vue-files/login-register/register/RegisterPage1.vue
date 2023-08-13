@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="toRegisterPage2" class="w-full flex flex-col gap-4 px-8">
-        <p class="font-bold text-3xl mt-14 mb-4">Create your account</p>
+        <p class="font-bold text-xl md:text-3xl mt-14 mb-4">Create your account</p>
         <input type="text" name="name" id="name" placeholder="Name" :class="inputClass" v-model="name">
         <input type="email" name="email" id="email" placeholder="Email" :class="inputClass" v-model="email">
 
@@ -9,19 +9,19 @@
             <p class="text-slate-500">This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
 
             <div class="text-black grid grid-cols-5 gap-3">
-                <select name="month" id="month" class="col-span-3 text-white px-2" :class="inputClass">
+                <select name="month" id="month" class="col-span-3 text-white px-2" :class="inputClass" v-model="selectedMonth" >
                     <option v-for="month in months" :key="{name: month}" class="text-black">{{ month }}</option>
                 </select>
-                <select name="days" id="days" class="col-span-1 text-white" :class="inputClass">
-                    <option v-for="day in days" :key="{name: day}" class="text-black">{{ day }}</option>
+                <select name="days" id="days" class="col-span-1 text-white" :class="inputClass" v-model="selectedDay">
+                    <option v-for="day in days" :key="{name: day}" :value="day" class="text-black">{{ day }}</option>
                 </select>
-                <select name="years" id="years" class="col-span-1 text-white" :class="inputClass">
-                    <option v-for="year in years" :key="{name: year}" class="text-black">{{ year }}</option>
+                <select name="years" id="years" class="col-span-1 text-white" :class="inputClass" v-model="selectedYear">
+                    <option v-for="year in years" :key="{name: year}" :value="year" class="text-black">{{ year }}</option>
                 </select>
             </div>
         </div>
 
-        <input type="submit" value="Next" class="rounded-full bg-white cursor-pointer py-3 text-black my-8" :disabled="emptyFields">
+        <input type="submit" value="Next" class="rounded-full bg-white cursor-pointer md:py-3 py-px text-black my-8" :disabled="emptyFields" :class="emptyFields ? 'cursor-not-allowed bg-slate-300' : ''">
     </form>
 </template>
 
@@ -35,10 +35,15 @@
     let days = ref([])
     let years = ref([])
     let emptyFields = ref(true)
+
     const date = new Date()
 
+    let selectedMonth = ref(undefined)
+    let selectedDay = ref(undefined)
+    let selectedYear = ref(undefined)
+
     const props = defineProps(['currentRegisterPageNumber', 'registerPageNumber'])
-    const emit = defineEmits(['toRegisterPage2'])
+    const emit = defineEmits(['toRegisterPage2', 'details'])
 
     onMounted(() =>
     {
@@ -67,6 +72,15 @@
 
     const toRegisterPage2 = () =>
     {
+        const details = ({
+            name : name.value,
+            email: email.value,
+            month: selectedMonth.value,
+            day : selectedDay.value,
+            year: selectedYear.value,
+        })
+
         emit('toRegisterPage2')
+        emit('details', details)
     }
 </script>
