@@ -18,4 +18,4 @@ Route::get('/{any?}', function () {
     return view('layout');
 })->where('any', '.*');
 
-Auth::routes(['verify' => true]);
+// Auth::routes(['verify' => true]);
