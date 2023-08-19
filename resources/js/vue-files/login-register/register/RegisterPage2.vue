@@ -1,12 +1,46 @@
 <template>
-    <form @submit.prevent="toRegisterPage2" class="w-full flex flex-col gap-4 px-8">
+    <form @submit.prevent="toConfirmEmail" class="w-full flex flex-col gap-4 px-8">
         <p class="font-bold text-3xl mt-14 mb-4">Create your account</p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque cumque officia dolore ipsam natus cum saepe ratione recusandae! Sint eum vero quidem quis ipsum mollitia aut doloribus ad veritatis minus!
+        <div class="flex justify-between items-center border border-white rounded p-2">
+            <div class="flex flex-col">
+                <small>Name</small>
+                <p>{{ props.details.name }}</p>
+            </div>
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div class="flex justify-between items-center border border-white rounded p-2">
+            <div class="flex flex-col">
+                <small>Email</small>
+                <p>{{ props.details.email }}</p>
+            </div>
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div class="flex justify-between items-center border border-white rounded p-2">
+            <div class="flex flex-col">
+                <small>Date of birth</small>
+                <p>{{ dateOfBirth }}</p>
+            </div>
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
 
         <input type="submit" value="Next" class="rounded-full bg-white cursor-pointer py-3 text-black my-8">
     </form>
 </template>
 
 <script setup>
+    const props = defineProps(['details'])
+    const emit = defineEmits(['toRegisterPage3'])
+    const dateOfBirth = `${props.details.month} ${props.details.day}, ${props.details.year}`
 
+    const toConfirmEmail = () =>
+    {
+        axios.post('/api/register-user', {
+            name: props.details.name ,
+            email: props.details.email
+        })
+        .then(() => emit('toRegisterPage3'))
+        .catch(err => console.error(err))
+    }
 </script>
