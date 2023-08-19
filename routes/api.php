@@ -21,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/getMonths', [DateController::class, 'getMonths'])->name('getMonths');
 Route::post('/register-user', [RegisterUserController::class, 'store'])->name('registerUser');
+Route::put('/check-email-verification/{id}', [RegisterUserController::class, 'verifyEmailCode'])->name('verifyEmailCode');
+Route::put('/store-user-password/{id}', [RegisterUserController::class, 'storePassword'])->name('storePassword');
+
