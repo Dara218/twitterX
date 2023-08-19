@@ -2,12 +2,13 @@
     <div class="bg-black text-white w-11/12 md:w-1/2 rounded-2xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 py-3 px-8">
 
         <div class="absolute left-5 top-5 flex items-center gap-8">
-            <div v-if="currentRegisterPageNumber > 1">
+            <div v-if="currentRegisterPageNumber == 1 ">
                 <i class="fa-solid fa-arrow-left cursor-pointer" @click="previousRegisterPage"></i>
             </div>
-            <div v-else>
+            <div v-if="currentRegisterPageNumber == 2 ">
                 <i @click="closeRegisterModal" class="fa-solid fa-x cursor-pointer"></i>
             </div>
+            <div v-else></div>
             <p class="text-xl font-bold">Step {{ currentRegisterPageNumber  }} of {{ registerPageNumber  }}</p>
         </div>
 
@@ -15,7 +16,10 @@
             <RegisterPage1 :currentRegisterPageNumber="currentRegisterPageNumber" :registerPageNumber="registerPageNumber" @toRegisterPage2="registerNextPage" @details="getUserDetails"/>
         </div>
         <div v-if="userDetails != null" v-show="currentRegisterPageNumber == 2">
-            <RegisterPage2 :currentRegisterPageNumber="currentRegisterPageNumber" :registerPageNumber="registerPageNumber" :details="userDetails"/>
+            <RegisterPage2 :currentRegisterPageNumber="currentRegisterPageNumber" :registerPageNumber="registerPageNumber" :details="userDetails" @toRegisterPage3="registerNextPage"/>
+        </div>
+        <div v-if="userDetails != null" v-show="currentRegisterPageNumber == 3">
+            <RegisterPage3 :currentRegisterPageNumber="currentRegisterPageNumber" :registerPageNumber="registerPageNumber" :details="userDetails" @toRegisterPage4="registerNextPage"/>
         </div>
     </div>
 </template>
@@ -25,6 +29,7 @@
     import { ref } from 'vue'
     import RegisterPage1 from '../login-register/register/RegisterPage1.vue'
     import RegisterPage2 from '../login-register/register/RegisterPage2.vue'
+    import RegisterPage3 from '../login-register/register/RegisterPage3.vue'
 
     let registerPageNumber = ref(4)
     let currentRegisterPageNumber = ref(1)
