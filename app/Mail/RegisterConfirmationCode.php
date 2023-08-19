@@ -26,7 +26,7 @@ class RegisterConfirmationCode extends Mailable
 
     public function build()
     {
-        return $this->from('ralphzacbautista@gmail.com', 'TwitterX')
+        return $this->from('twitterX@gmail.com', 'TwitterX')
                     ->subject('TwitterX Registration code')
                     ->view('email.emailRegistration')
                     ->with('confirmationCode', $this->confirmationCode);
