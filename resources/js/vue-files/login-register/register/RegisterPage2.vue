@@ -31,7 +31,7 @@
 
 <script setup>
     const props = defineProps(['details'])
-    const emit = defineEmits(['toRegisterPage3'])
+    const emit = defineEmits(['toRegisterPage3', 'userDetails'])
     const dateOfBirth = `${props.details.month} ${props.details.day}, ${props.details.year}`
 
     const toConfirmEmail = () =>
@@ -40,7 +40,10 @@
             name: props.details.name ,
             email: props.details.email
         })
-        .then(() => emit('toRegisterPage3'))
+        .then((res) => {
+            emit('userDetails', res.data)
+            emit('toRegisterPage3')
+        })
         .catch(err => console.error(err))
     }
 </script>
