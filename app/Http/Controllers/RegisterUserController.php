@@ -29,11 +29,52 @@ class RegisterUserController extends Controller
         try
         {
             Mail::to($request->email)->send(new RegisterConfirmationCode($confirmationCode));
-            return response()->json(['confirmation_code' => $confirmationCode]);
+            return response()->json(['user' => $user]);
         }
         catch(Exception $error)
         {
             return response()->json($error);
         }
     }
+
+    public function verifyEmailCode($id, Request $request)
+    {
+        $user = UserRegistrationCode::where('user_id', $id)->first();
+
+        if($user->confirmation_code == $request->code)
+        {
+            UserRegistrationCode::where('user_id', $user->user_id)
+                                ->update([
+                                    'isConfirmed' => true
+                                ]);
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
+    }
+
+    public function storePassword($id, Request $request)
+    {
+        if(strlen($request->password) < 8)
+        {
+            return response()->json(['success' => false]);
+        }
+
+        $hashPassword = bcrypt($request->password);
+        User::find($id)->update(['password' => $hashPassword]);
+        return response()->json(['success' => true]);
+
+    }
+
+    public function storeUserPhoto($id, Request $request)
+    {
+        /*
+
+        TODO:
+            Make new user_photos table
+            add validation on registerPageProfilePicture.vue
+            https://github.com/Dara218/LaravelVue-Todo/blob/main/resources/js/vue/Profile.vue
+         */
+    }
+
 }
