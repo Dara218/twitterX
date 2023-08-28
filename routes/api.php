@@ -23,4 +23,4 @@ Route::get('/getMonths', [DateController::class, 'getMonths'])->name('getMonths'
 Route::post('/register-user', [RegisterUserController::class, 'store'])->name('registerUser');
 Route::put('/check-email-verification/{id}', [RegisterUserController::class, 'verifyEmailCode'])->name('verifyEmailCode');
 Route::put('/store-user-password/{id}', [RegisterUserController::class, 'storePassword'])->name('storePassword');
-
+Route::post('/store-user-photo/{id}', [RegisterUserController::class, 'storeUserPhoto'])->name('storeUserPhoto');
