@@ -19,23 +19,27 @@
 
     const props = defineProps(['details'])
     const emit = defineEmits(['toRegisterPage3'])
-    const email = ref('')
-    const userId = ref(0)
+    let email = ref('')
+    let userId = ref(0)
     let code = ref(0)
 
-    console.log(props.details)
-
     onMounted(() => {
-        email.value = props.details.email
-        userId.value = props.details.userId
+        email.value = props.details.user.email
+        userId.value = props.details.user.id
     })
 
     const toFinalRegisterPage = () =>
     {
-        axios.put(`/api/check-email-verification/${userId}`, {
+        axios.put(`/api/check-email-verification/${userId.value}`, {
             code: code.value
         })
-        .then(() => emit('toRegisterPage4'))
+        .then(res => {
+            if(res.data.success)
+            {
+                emit('toRegisterPage4')
+            }
+            console.log('wrong passcode')
+        })
         .catch(err => console.error(err))
     }
 </script>
