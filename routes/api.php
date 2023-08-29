@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DateController;
 use App\Http\Controllers\RegisterUserController;
+use App\Http\Controllers\UserPhotoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,4 @@ Route::get('/getMonths', [DateController::class, 'getMonths'])->name('getMonths'
 Route::post('/register-user', [RegisterUserController::class, 'store'])->name('registerUser');
 Route::put('/check-email-verification/{id}', [RegisterUserController::class, 'verifyEmailCode'])->name('verifyEmailCode');
 Route::put('/store-user-password/{id}', [RegisterUserController::class, 'storePassword'])->name('storePassword');
-Route::post('/store-user-photo/{id}', [RegisterUserController::class, 'storeUserPhoto'])->name('storeUserPhoto');
+Route::put('/update-user-photo/{id}', [UserPhotoController::class, 'updateUserPhoto'])->name('updateUserPhoto');
