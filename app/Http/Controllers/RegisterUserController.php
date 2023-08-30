@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Mail\RegisterConfirmationCode;
 use App\Models\User;
+use App\Models\UserPhoto;
 use App\Models\UserRegistrationCode;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use SebastianBergmann\Type\FalseType;
 
 class RegisterUserController extends Controller
@@ -20,6 +22,8 @@ class RegisterUserController extends Controller
             'name' => $request->name,
             'email' => $request->email
         ]);
+
+        UserPhoto::create(['user_id' => $user->id]);
 
         UserRegistrationCode::create([
             'user_id' => $user->id,
@@ -49,7 +53,6 @@ class RegisterUserController extends Controller
                                 ]);
             return response()->json(['success' => true]);
         }
-
         return response()->json(['success' => false]);
     }
 
@@ -63,18 +66,34 @@ class RegisterUserController extends Controller
         $hashPassword = bcrypt($request->password);
         User::find($id)->update(['password' => $hashPassword]);
         return response()->json(['success' => true]);
-
     }
 
-    public function storeUserPhoto($id, Request $request)
+    public function updateUsername($id, Request $request)
     {
-        /*
+        $user = User::findOrFail($id);
+        $isUsernameExists = $user->where('username', $request->username)
+                                ->exists();
 
-        TODO:
-            Make new user_photos table
-            add validation on registerPageProfilePicture.vue
-            https://github.com/Dara218/LaravelVue-Todo/blob/main/resources/js/vue/Profile.vue
-         */
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|min:3|max:30'
+        ]);
+
+        if($isUsernameExists)
+        {
+            return response()->json([
+                'success' => false,
+                'message' => 'Username already exists'
+            ]);
+        }
+        if($validator->fails())
+        {
+            $error = $validator->errors()->get('username')[0];
+            return response()->json([
+                'success' => false,
+                'message' => $error
+            ]);
+        }
+        $user->update(['username' => $request->username]);
+        return response()->json(['success' => true]);
     }
-
 }
