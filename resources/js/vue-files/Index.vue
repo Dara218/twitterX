@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-center items-center min-h-screen bg-black">
         <div v-if="openRegistrationModal">
-            <div class="bg-slate-500 bg-opacity-50 w-full h-full top-0 absolute"></div>
+            <div class="bg-slate-500 bg-opacity-50 md:w-full h-full top-0 absolute"></div>
             <RegisterModal @closeRegister="closeRegistrationModal" :openRegistrationModal="openRegistrationModal"/>
         </div>
         <div class="flex flex-col items-center md:grid grid-cols-2">
