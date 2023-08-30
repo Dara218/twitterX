@@ -25,3 +25,4 @@ Route::post('/register-user', [RegisterUserController::class, 'store'])->name('r
 Route::put('/check-email-verification/{id}', [RegisterUserController::class, 'verifyEmailCode'])->name('verifyEmailCode');
 Route::put('/store-user-password/{id}', [RegisterUserController::class, 'storePassword'])->name('storePassword');
 Route::put('/update-user-photo/{id}', [UserPhotoController::class, 'updateUserPhoto'])->name('updateUserPhoto');
+Route::put('/store-username/{id}', [RegisterUserController::class, 'updateUsername'])->name('updateUsername');
