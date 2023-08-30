@@ -40,7 +40,7 @@
             name: props.details.name ,
             email: props.details.email
         })
-        .then((res) => {
+        .then(res => {
             emit('userDetails', res.data)
             emit('toRegisterPage3')
         })

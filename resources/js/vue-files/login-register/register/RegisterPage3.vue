@@ -34,11 +34,13 @@
             code: code.value
         })
         .then(res => {
-            if(res.data.success)
+            if(! res.data.success)
             {
+                console.log('wrong passcode')
+            }
+            else{
                 emit('toRegisterPage4')
             }
-            console.log('wrong passcode')
         })
         .catch(err => console.error(err))
     }

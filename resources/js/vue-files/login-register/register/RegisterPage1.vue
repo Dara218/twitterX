@@ -10,13 +10,19 @@
 
             <div class="text-black grid grid-cols-5 gap-3">
                 <select name="month" id="month" class="col-span-3 text-white px-2" :class="inputClass" v-model="selectedMonth" >
-                    <option v-for="month in months" :key="{name: month}" class="text-black">{{ month }}</option>
+                    <option v-for="month in months" :key="{name: month}" class="text-black">
+                        {{ month }}
+                    </option>
                 </select>
                 <select name="days" id="days" class="col-span-1 text-white" :class="inputClass" v-model="selectedDay">
-                    <option v-for="day in days" :key="{name: day}" :value="day" class="text-black">{{ day }}</option>
+                    <option v-for="day in days" :key="{name: day}" :value="day" class="text-black">
+                        {{ day }}
+                    </option>
                 </select>
                 <select name="years" id="years" class="col-span-1 text-white" :class="inputClass" v-model="selectedYear">
-                    <option v-for="year in years" :key="{name: year}" :value="year" class="text-black">{{ year }}</option>
+                    <option v-for="year in years" :key="{name: year}" :value="year" class="text-black">
+                        {{ year }}
+                    </option>
                 </select>
             </div>
         </div>
