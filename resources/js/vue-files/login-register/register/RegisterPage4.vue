@@ -6,7 +6,7 @@
         </div>
 
         <div class="flex flex-col gap-2">
-            <input type="text" name="password" id="password" placeholder="Enter your password" class="bg-transparent border border-slate-500 py-3 rounded px-4" v-model="password">
+            <input v-model="password" type="password" name="password" id="password" placeholder="Enter your password" class="bg-transparent border border-slate-500 py-3 rounded px-4">
         </div>
 
         <input type="submit" value="Next" class="rounded-full bg-white cursor-pointer py-3 text-black my-8">
@@ -17,7 +17,7 @@
     import { onMounted, ref } from "vue";
 
     const props = defineProps(['details'])
-    const emit = defineEmits(['toAddProfilePic'])
+    const emit = defineEmits(['toAddProfilePic', 'password'])
 
     let userId = ref(0)
     let password = ref(0)
@@ -29,12 +29,15 @@
         axios.put(`/api/store-user-password/${userId.value}`, {
             password: password.value
         })
-        .then((res) => {
-            if(res.data.success)
+        .then(res => {
+            if(! res.data.success)
             {
+                console.log('need 8 characters long');
+            }
+            else{
+                emit('password', password.value)
                 emit('toAddProfilePic')
             }
-            console.log('need 8 characters long');
         })
         .catch(err => console.error(err))
     }
