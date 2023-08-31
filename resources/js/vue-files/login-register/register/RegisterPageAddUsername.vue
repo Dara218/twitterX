@@ -40,8 +40,7 @@
             else{
                 errorMessage.value = ''
                 axios.post('/api/login-user', {
-                    username: username.value,
-                    email: props.details.user.email,
+                    login: username.value,
                     password: props.password
                 })
                 .then(res => {
@@ -50,8 +49,7 @@
                         console.log('error ocurred');
                     }
                     else{
-                        console.log('logged in!');
-                        // router.push({ name: 'Home' })
+                        router.push({ name: 'Home' })
                     }
                 })
                 .catch(err => console.error(err))
