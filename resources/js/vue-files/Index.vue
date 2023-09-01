@@ -1,8 +1,12 @@
 <template>
     <div class="flex justify-center items-center min-h-screen bg-black">
         <div v-if="openRegistrationModal">
-            <div class="bg-slate-500 bg-opacity-50 md:w-full h-full top-0 absolute"></div>
-            <RegisterModal @closeRegister="closeRegistrationModal" :openRegistrationModal="openRegistrationModal"/>
+            <div :class="darkBackgroundOverlayClass"></div>
+            <RegisterModal @closeRegister="toggleRegistrationModal" :openRegistrationModal="openRegistrationModal"/>
+        </div>
+        <div v-if="openLoginUserModal">
+            <div :class="darkBackgroundOverlayClass"></div>
+            <Login @closeLoginModal="toggleLoginModal" @redirectToRegister="redirectToRegister"/>
         </div>
         <div class="flex flex-col items-center md:grid grid-cols-2">
             <div class="col-span-1 md:flex justify-center items-center w-8/12 md:w-full mb-8">
@@ -22,13 +26,13 @@
                         <div class="bg-slate-400 flex-grow h-px"></div>
                     </div>
 
-                    <button @click="createAccount" class="bg-blue-500 text-white w-full rounded-full py-2 hover:bg-opacity-90">Create account</button>
+                    <button @click="toggleRegistrationModal" class="bg-blue-500 text-white w-full rounded-full py-2 hover:bg-opacity-90">Create account</button>
                     <small>By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.</small>
                 </div>
 
                 <div class="md:w-8/12 w-full">
                     <p class="text-xl font-bold mb-4">Already have an account?</p>
-                    <button class="cursor-pointer text-blue-500 border border-white rounded-full w-full font-bold py-2 hover:bg-slate-600 hover:bg-opacity-30">Sign in</button>
+                    <button @click="toggleLoginModal" class="cursor-pointer text-blue-500 border border-white rounded-full w-full font-bold py-2 hover:bg-slate-600 hover:bg-opacity-30">Sign in</button>
                 </div>
             </div>
         </div>
@@ -38,8 +42,17 @@
 <script setup>
     import { ref } from "vue";
     import RegisterModal from '../vue-files/login-register/Register.vue'
-    let openRegistrationModal = ref(false)
+    import Login from "./login-register/Login.vue";
 
-    const createAccount = () => openRegistrationModal.value = true
-    const closeRegistrationModal = () => openRegistrationModal.value = false
+    const darkBackgroundOverlayClass = 'bg-slate-500 bg-opacity-50 md:w-full h-full top-0 absolute'
+    let openRegistrationModal = ref(false)
+    let openLoginUserModal = ref(false)
+
+    const toggleRegistrationModal = () => openRegistrationModal.value =! openRegistrationModal.value
+    const toggleLoginModal = () => openLoginUserModal.value =! openLoginUserModal.value
+    const redirectToRegister = () =>
+    {
+        toggleLoginModal()
+        toggleRegistrationModal()
+    }
 </script>
