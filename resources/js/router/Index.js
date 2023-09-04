@@ -17,7 +17,7 @@ const router = createRouter({
             beforeEnter: function(to, from, next){
                 axios.get('/api/authenticated-user')
                 .then(() => next())
-                .catch(() => next({name: 'Index'}))
+                .catch(() => next({ name: 'Index' }))
             }
         },
     ]
