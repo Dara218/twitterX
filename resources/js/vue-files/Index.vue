@@ -42,7 +42,7 @@
 <script setup>
     import { ref } from "vue";
     import RegisterModal from '../vue-files/login-register/Register.vue'
-    import Login from "./login-register/Login.vue";
+    import Login from "./login-register/login/Login.vue"
 
     const darkBackgroundOverlayClass = 'bg-slate-500 bg-opacity-50 md:w-full h-full top-0 absolute'
     let openRegistrationModal = ref(false)
