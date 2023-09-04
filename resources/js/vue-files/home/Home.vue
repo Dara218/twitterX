@@ -14,6 +14,7 @@
                         </div>
                     </div>
                     <div class="bg-black text-white min-h-screen border border-slate-700">
+                        <button @click="logoutUser">logout</button>
                         <HomeTweetsVue/>
                     </div>
                 </div>
@@ -29,9 +30,17 @@
 </template>
 
 <script setup>
+    import router from '../../router/Index.js'
     import Sidebar from '../../components/Sidebar.vue'
     import RightBar from '../../components/RightBar.vue'
     import HomeTweetsVue from '../../components/HomeTweets.vue'
 
     const middleButtonClass = 'col-span-1 cursor-pointer flex hover:bg-slate-800 justify-center py-4 text-center'
+
+    const logoutUser = () =>
+    {
+        axios.post('/api/logout-user')
+        .then(() => router.push({ name: 'Index' }))
+        .then(err => console.error(err))
+    }
 </script>
