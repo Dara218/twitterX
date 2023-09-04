@@ -25,4 +25,7 @@ Route::name('register.')->group(function(){
     Route::put('/store-username/{id}', [RegisterUserController::class, 'updateUsername'])->name('updateUsername');
 });
 
-Route::post('/login-user', [SessionController::class, 'store'])->name('store');
+Route::name('session.')->group(function(){
+    Route::post('/login-user', [SessionController::class, 'store'])->name('store');
+    Route::post('/logout-user', [SessionController::class, 'logout'])->name('logout');
+});
