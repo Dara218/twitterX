@@ -16,6 +16,7 @@
 
 <script setup>
     import { onMounted, ref } from "vue"
+    import router from '../../../router/Index.js'
 
     const props = defineProps(['details', 'password'])
     const emit = defineEmits(['toAddProfilePic'])
@@ -39,7 +40,8 @@
             }
             else{
                 errorMessage.value = ''
-                axios.post('/api/login-user', {
+                axios.post('/api/login-user',
+                {
                     login: username.value,
                     password: props.password
                 })
