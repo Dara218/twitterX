@@ -3,6 +3,7 @@
 use App\Http\Controllers\DateController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserPhotoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,4 +29,8 @@ Route::name('register.')->group(function(){
 Route::name('session.')->group(function(){
     Route::post('/login-user', [SessionController::class, 'store'])->name('store');
     Route::post('/logout-user', [SessionController::class, 'logout'])->name('logout');
+});
+
+Route::prefix('tweet')->name('tweet.')->group(function(){
+    Route::post('/store-tweet', [TweetController::class, 'store'])->name('store');
 });
