@@ -14,7 +14,8 @@
                         </div>
                     </div>
                     <div class="bg-black text-white min-h-screen border border-slate-700">
-                        <button @click="logoutUser">logout</button>
+                        <button @click="logoutUser">logout</button> <br/>
+                        <UserWriteTweetForm/>
                         <HomeTweetsVue/>
                     </div>
                 </div>
@@ -34,6 +35,7 @@
     import Sidebar from '../../components/Sidebar.vue'
     import RightBar from '../../components/RightBar.vue'
     import HomeTweetsVue from '../../components/HomeTweets.vue'
+    import UserWriteTweetForm from '../../components/UserWriteTweetForm.vue'
 
     const middleButtonClass = 'col-span-1 cursor-pointer flex hover:bg-slate-800 justify-center py-4 text-center'
 
