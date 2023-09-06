@@ -31,8 +31,8 @@
     const showImage = (e) =>
     {
         const file = e.target.files[0]
-
         const reader = new FileReader()
+
         reader.onload = () => {
             previewImage.value = reader.result
             fileName.value = file
