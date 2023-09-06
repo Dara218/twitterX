@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tweets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('text-content')->nullable();
+            $table->string('text_content')->nullable();
             $table->string('media')->nullable();
             $table->timestamps();
         });
