@@ -4,13 +4,12 @@ use App\Http\Controllers\DateController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TweetController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPhotoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'get']);
 
 Route::middleware('auth:sanctum')->get('/authenticated-user', function () {
     return true;
