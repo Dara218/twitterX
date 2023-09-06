@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-6 bg-black h-screen px-16 py-4">
-        <img src="../../../storage/images/logo-white.png" alt="logo white" class="w-7 h-auto">
+        <img src="storage/images/logo-white.png" alt="logo white" class="w-7 h-auto">
 
         <ul class="flex flex-col gap-6">
             <li :class="liClass">
@@ -27,7 +27,7 @@
                 Communities
             </li>
             <li :class="liClass">
-                <img src="../../../storage/images/logo-white.png" alt="logo white" class="w-7 h-auto">
+                <img src="storage/images/logo-white.png" alt="logo white" class="w-7 h-auto">
                 Verified
             </li>
             <li :class="liClass">
