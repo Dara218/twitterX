@@ -16,7 +16,7 @@
                     <div class="bg-black text-white min-h-screen border border-slate-700">
                         <button @click="logoutUser">logout</button> <br/>
                         <UserWriteTweetForm/>
-                        <HomeTweetsVue/>
+                        <HomeTweetsVue :userDetails="userDetails"/>
                     </div>
                 </div>
                 <div class="flex flex-col col-span-2 gap-6 bg-black px-8 py-4">
@@ -31,6 +31,7 @@
 </template>
 
 <script setup>
+    import { onMounted, ref } from 'vue'
     import router from '../../router/Index.js'
     import Sidebar from '../../components/Sidebar.vue'
     import RightBar from '../../components/RightBar.vue'
@@ -38,6 +39,16 @@
     import UserWriteTweetForm from '../../components/UserWriteTweetForm.vue'
 
     const middleButtonClass = 'col-span-1 cursor-pointer flex hover:bg-slate-800 justify-center py-4 text-center'
+    const userDetails = ref({})
+
+    onMounted(() => {
+        axios.get('/api/user')
+        .then(res => {
+            console.log(res.data)
+            userDetails.value = res.data
+        })
+        .catch(err => console.error(err))
+    })
 
     const logoutUser = () =>
     {
