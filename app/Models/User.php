@@ -44,4 +44,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function userPhoto()
+    {
+        return $this->hasOne(UserPhoto::class, 'user_id', 'id');
+    }
+
+    public function tweet()
+    {
+        return $this->hasMany(Tweet::class, 'user_id', 'id');
+    }
 }
