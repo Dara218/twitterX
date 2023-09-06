@@ -12,7 +12,7 @@ class TweetController extends Controller
     {
         $content = [
             'user_id' => Auth::user()->id,
-            'text_content' => $request->tweet,
+            'text_content' => $request->input('tweet'),
         ];
 
         if($request->hasFile('media'))
