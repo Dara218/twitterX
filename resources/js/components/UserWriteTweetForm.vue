@@ -11,6 +11,10 @@
                 <div>
                     <input v-model="tweet" type="text" name="tweet" id="tweet" placeholder="What is happening?!" class="w-full bg-transparent py-2 placeholder:text-xl focus:outline-none">
 
+                    <div v-if="previewImage">
+                        <img :src="previewImage" alt="Twitter" class="h-auto w-14 md:w-5/12 my-2">
+                    </div>
+
                     <div class="flex items-center gap-2 text-blue-500 border-b border-slate-500 pb-4">
                         <span class="material-symbols-outlined">public</span>
                         <span class="">Everyone can reply</span>
@@ -18,7 +22,10 @@
 
                     <div class="full flex items-center justify-between mt-4 text-blue-500">
                         <div class="flex gap-2">
-                            <span :class="tweetOptionClass">collections_bookmark</span>
+                            <label for="media" :class="tweetOptionClass">
+                                <span :class="tweetOptionClass">collections_bookmark</span>
+                            </label>
+                            <input name="media" id="media" type="file" class="hidden" @change="handleFileChange">
                             <span :class="tweetOptionClass">gif_box</span>
                             <span :class="tweetOptionClass">ballot</span>
                             <span :class="tweetOptionClass">sentiment_satisfied</span>
@@ -39,18 +46,32 @@
     const tweetOptionClass = 'material-symbols-outlined cursor-pointer'
     let tweet = ref('')
     let media = ref('')
+    let previewImage = ref('')
 
-    // TODO: Fix when user clicks the gallery icon, input file will show up and upload it on db
+    const handleFileChange = (e) =>
+    {
+        const file = e.target.files[0]
 
-    const storeTweet = () => 
+        const reader = new FileReader()
+
+        reader.onload = () =>
+        {
+            previewImage.value = reader.result
+            media.value = file
+        }
+
+        reader.readAsDataURL(file)
+    }
+
+    const storeTweet = () =>
     {
         const formData = new FormData()
         formData.append('media', media.value)
+        formData.append('tweet', tweet.value)
 
-        axios.post('/api/tweet/store-tweet', {
-            post: tweet.value
-        })
-        .then(res => {
+        axios.post('/api/tweet/store-tweet', formData)
+        .then(res =>
+        {
             if(! res.data.success)
             {
                 console.log('Error posting your tweet')
