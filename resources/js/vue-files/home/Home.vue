@@ -15,8 +15,8 @@
                     </div>
                     <div class="bg-black text-white min-h-screen border border-slate-700">
                         <button @click="logoutUser">logout</button> <br/>
-                        <UserWriteTweetForm/>
-                        <HomeTweetsVue :userDetails="userDetails"/>
+                        <UserWriteTweetForm :userId="userDetails.id" @newTweet="appendNewTweet"/>
+                        <HomeTweetsVue :userDetails="userDetails" :newTweet="newTweet"/>
                     </div>
                 </div>
                 <div class="flex flex-col col-span-2 gap-6 bg-black px-8 py-4">
@@ -40,13 +40,11 @@
 
     const middleButtonClass = 'col-span-1 cursor-pointer flex hover:bg-slate-800 justify-center py-4 text-center'
     const userDetails = ref({})
+    let newTweet = ref({})
 
     onMounted(() => {
         axios.get('/api/user')
-        .then(res => {
-            console.log(res.data)
-            userDetails.value = res.data
-        })
+        .then(res => userDetails.value = res.data)
         .catch(err => console.error(err))
     })
 
@@ -56,4 +54,6 @@
         .then(() => router.push({ name: 'Index' }))
         .then(err => console.error(err))
     }
+
+    const appendNewTweet = tweet => newTweet.value = tweet
 </script>
