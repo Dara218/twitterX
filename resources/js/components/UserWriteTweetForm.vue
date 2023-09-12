@@ -41,17 +41,20 @@
 </template>
 
 <script setup>
-    import { ref } from "vue"
+    import { ref, watch } from "vue"
 
     const tweetOptionClass = 'material-symbols-outlined cursor-pointer'
+    const emit = defineEmits(['newTweet'])
+    const props = defineProps(['userId'])
+    let previewImage = ref('')
     let tweet = ref('')
     let media = ref('')
-    let previewImage = ref('')
 
-    const handleFileChange = (e) =>
+    watch(() => props.userId, () => listen())
+
+    const handleFileChange = e =>
     {
         const file = e.target.files[0]
-
         const reader = new FileReader()
 
         reader.onload = () =>
@@ -72,14 +75,26 @@
         axios.post('/api/tweet/store-tweet', formData)
         .then(res =>
         {
+            if(res.data.error)
+            {
+                console.log('empty')
+                return
+            }
             if(! res.data.success)
             {
                 console.log('Error posting your tweet')
             }
             else{
-                console.log('tweet posted');
+                tweet.value = ''
+                console.log('tweet posted')
             }
         })
         .catch(err => console.error(err))
+    }
+
+    const listen = () =>
+    {
+        Echo.private(`tweet.${props.userId}`)
+            .listen('NewTweet', tweet => emit('newTweet', tweet))
     }
 </script>
