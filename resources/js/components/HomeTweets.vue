@@ -1,6 +1,6 @@
 <template>
     <div v-if="userTweets" class="flex flex-col">
-        <div v-for="userTweet of userTweets" :key="userTweet.id" class="flex gap-2 border border-t-0 border-l-0 border-r-0 border-slate-700 p-4">
+        <div v-for="userTweet of userTweets.slice().reverse()" :key="userTweet.id" id="tweetContainer" class="flex gap-2 border border-t-0 border-l-0 border-r-0 border-slate-700 p-4">
             <img src="storage/images/logo-white.png" alt="" class="h-8 rounded-full">
             <div class="flex flex-col w-full">
                 <div class="flex justify-between gap-2">
@@ -17,7 +17,7 @@
                     <div>
                         {{ userTweet.text_content }}
                     </div>
-                    <img :src="'storage/' + userTweet.media" :alt="props.userDetails.username + 'tweet'" class="h-auto w-14 md:w-5/12 my-2">
+                    <img v-if="userTweet.media" :src="'storage/' + userTweet.media" :alt="props.userDetails.username + 'tweet'" class="h-auto w-14 md:w-5/12 my-2">
                     <div class="full flex justify-around mt-4 text-slate-400">
                         <span :class="tweetOptionClass">
                             chat_bubble
@@ -45,14 +45,11 @@
     import { onMounted, ref, watch } from "vue"
 
     const tweetOptionClass = 'material-symbols-outlined cursor-pointer'
-    const props = defineProps(['userDetails'])
-    const userTweets = ref({})
-
-    // todo: when new tweet comes, append on top // add web socket
+    const props = defineProps(['userDetails', 'newTweet'])
+    const userTweets = ref([])
 
     onMounted(() => userTweets.value = props.userDetails.tweet)
 
-    watch(() => props.userDetails, (val) => {
-        userTweets.value = val.tweet
-    })
+    watch(() => props.userDetails, val => userTweets.value = val.tweet)
+    watch(() => props.newTweet, val => userTweets.value.push(val))
 </script>
